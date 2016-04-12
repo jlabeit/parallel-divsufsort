@@ -40,7 +40,7 @@ static const saint_t lg_table[256]= {
   7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
 };
 
-static INLINE
+static inline
 saint_t
 tr_ilg(saidx_t n) {
 #if defined(BUILD_DIVSUFSORT64)
@@ -93,7 +93,7 @@ tr_insertionsort(const saidx_t *ISAd, saidx_t *first, saidx_t *last) {
 
 /*---------------------------------------------------------------------------*/
 
-static INLINE
+static inline
 void
 tr_fixdown(const saidx_t *ISAd, saidx_t *SA, saidx_t i, saidx_t size) {
   saidx_t j, k;
@@ -134,7 +134,7 @@ tr_heapsort(const saidx_t *ISAd, saidx_t *SA, saidx_t size) {
 /*---------------------------------------------------------------------------*/
 
 /* Returns the median of three elements. */
-static INLINE
+static inline
 saidx_t *
 tr_median3(const saidx_t *ISAd, saidx_t *v1, saidx_t *v2, saidx_t *v3) {
   saidx_t *t;
@@ -147,7 +147,7 @@ tr_median3(const saidx_t *ISAd, saidx_t *v1, saidx_t *v2, saidx_t *v3) {
 }
 
 /* Returns the median of five elements. */
-static INLINE
+static inline
 saidx_t *
 tr_median5(const saidx_t *ISAd,
            saidx_t *v1, saidx_t *v2, saidx_t *v3, saidx_t *v4, saidx_t *v5) {
@@ -162,7 +162,7 @@ tr_median5(const saidx_t *ISAd,
 }
 
 /* Returns the pivot element. */
-static INLINE
+static inline
 saidx_t *
 tr_pivot(const saidx_t *ISAd, saidx_t *first, saidx_t *last) {
   saidx_t *middle;
@@ -197,14 +197,14 @@ struct _trbudget_t {
   saidx_t count;
 };
 
-static INLINE
+static inline
 void
 trbudget_init(trbudget_t *budget, saidx_t chance, saidx_t incval) {
   budget->chance = chance;
   budget->remain = budget->incval = incval;
 }
 
-static INLINE
+static inline
 saint_t
 trbudget_check(trbudget_t *budget, saidx_t size) {
   if(size <= budget->remain) { budget->remain -= size; return 1; }
@@ -217,7 +217,7 @@ trbudget_check(trbudget_t *budget, saidx_t size) {
 
 /*---------------------------------------------------------------------------*/
 
-static INLINE
+static inline
 void
 tr_partition(const saidx_t *ISAd,
              saidx_t *first, saidx_t *middle, saidx_t *last,

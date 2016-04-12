@@ -27,59 +27,16 @@
 #ifndef _DIVSUFSORT_PRIVATE_H
 #define _DIVSUFSORT_PRIVATE_H 1
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-#if HAVE_CONFIG_H
-# include "config.h"
-#endif
 #include <assert.h>
 #include <stdio.h>
-#if HAVE_STRING_H
-# include <string.h>
-#endif
-#if HAVE_STDLIB_H
-# include <stdlib.h>
-#endif
-#if HAVE_MEMORY_H
-# include <memory.h>
-#endif
-#if HAVE_STDDEF_H
-# include <stddef.h>
-#endif
-#if HAVE_STRINGS_H
-# include <strings.h>
-#endif
-#if HAVE_INTTYPES_H
-# include <inttypes.h>
-#else
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-#endif
-#if defined(BUILD_DIVSUFSORT64)
-# include "divsufsort64.h"
-# ifndef SAIDX_T
-#  define SAIDX_T
-#  define saidx_t saidx64_t
-# endif /* SAIDX_T */
-# ifndef PRIdSAIDX_T
-#  define PRIdSAIDX_T PRIdSAIDX64_T
-# endif /* PRIdSAIDX_T */
-# define divsufsort divsufsort64
-# define divbwt divbwt64
-# define divsufsort_version divsufsort64_version
-# define bw_transform bw_transform64
-# define inverse_bw_transform inverse_bw_transform64
-# define sufcheck sufcheck64
-# define sa_search sa_search64
-# define sa_simplesearch sa_simplesearch64
-# define sssort sssort64
-# define trsort trsort64
-#else
-# include "divsufsort.h"
-#endif
+#include <string.h>
+#include <stdlib.h>
+#include <memory.h>
+#include <stddef.h>
+#include <strings.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include "divsufsort.h"
 
 
 /*- Constants -*/
@@ -117,7 +74,7 @@ extern "C" {
 #endif
 /* minstacksize = log(SS_BLOCKSIZE) / log(3) * 2 */
 #if SS_BLOCKSIZE == 0
-# if defined(BUILD_DIVSUFSORT64)
+# if defined(LONG)
 #  define SS_MISORT_STACKSIZE (96)
 # else
 #  define SS_MISORT_STACKSIZE (64)
@@ -127,14 +84,14 @@ extern "C" {
 #else
 # define SS_MISORT_STACKSIZE (24)
 #endif
-#if defined(BUILD_DIVSUFSORT64)
+#if defined(LONG)
 # define SS_SMERGE_STACKSIZE (64)
 #else
 # define SS_SMERGE_STACKSIZE (32)
 #endif
 /* for trsort.c */
 #define TR_INSERTIONSORT_THRESHOLD (8)
-#if defined(BUILD_DIVSUFSORT64)
+#if defined(LONG)
 # define TR_STACKSIZE (96)
 #else
 # define TR_STACKSIZE (64)
@@ -179,12 +136,17 @@ extern "C" {
   } while(0)
 /* for divsufsort.c */
 #define BUCKET_A(_c0) bucket_A[(_c0)]
+#define RED_BUCKET_A(_c0) reducer_bucket_A[(_c0)]
 #if ALPHABET_SIZE == 256
 #define BUCKET_B(_c0, _c1) (bucket_B[((_c1) << 8) | (_c0)])
 #define BUCKET_BSTAR(_c0, _c1) (bucket_B[((_c0) << 8) | (_c1)])
+#define RED_BUCKET_B(_c0, _c1) (reducer_bucket_B[((_c1) << 8) | (_c0)])
+#define RED_BUCKET_BSTAR(_c0, _c1) (reducer_bucket_B[((_c0) << 8) | (_c1)])
 #else
 #define BUCKET_B(_c0, _c1) (bucket_B[(_c1) * ALPHABET_SIZE + (_c0)])
-#define BUCKET_BSTAR(_c0, _c1) (bucket_B[(_c0) * ALPHABET_SIZE + (_c1)])
+#define BUCKET_B(_c0, _c1) (bucket_B[(_c1) * ALPHABET_SIZE + (_c0)])
+#define RED_BUCKET_BSTAR(_c0, _c1) (reducer_bucket_B[(_c0) * ALPHABET_SIZE + (_c1)])
+#define RED_BUCKET_BSTAR(_c0, _c1) (reducer_bucket_B[(_c0) * ALPHABET_SIZE + (_c1)])
 #endif
 
 
@@ -199,9 +161,8 @@ sssort(const sauchar_t *Td, const saidx_t *PA,
 void
 trsort(saidx_t *ISA, saidx_t *SA, saidx_t n, saidx_t depth);
 
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
+/* paralleltrsort.c */
+void
+paralleltrsort(saidx_t *ISA, saidx_t *SA, saidx_t n, saidx_t* buf, saidx_t buffer_len);
 
 #endif /* _DIVSUFSORT_PRIVATE_H */

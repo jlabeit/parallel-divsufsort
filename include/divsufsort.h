@@ -1,5 +1,5 @@
 /*
- * divsufsort@W64BIT@.h for libdivsufsort@W64BIT@
+ * divsufsort.h for libdivsufsort
  * Copyright (c) 2003-2008 Yuta Mori All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -24,42 +24,46 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef _DIVSUFSORT@W64BIT@_H
-#define _DIVSUFSORT@W64BIT@_H 1
+#ifndef _DIVSUFSORT_H
+#define _DIVSUFSORT_H 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-@INCFILE@
+#include <inttypes.h>
 
 #ifndef DIVSUFSORT_API
 # ifdef DIVSUFSORT_BUILD_DLL
-#  define DIVSUFSORT_API @DIVSUFSORT_EXPORT@
+#  define DIVSUFSORT_API 
 # else
-#  define DIVSUFSORT_API @DIVSUFSORT_IMPORT@
+#  define DIVSUFSORT_API 
 # endif
 #endif
 
 /*- Datatypes -*/
 #ifndef SAUCHAR_T
 #define SAUCHAR_T
-typedef @SAUCHAR_TYPE@ sauchar_t;
+typedef uint8_t sauchar_t;
 #endif /* SAUCHAR_T */
 #ifndef SAINT_T
 #define SAINT_T
-typedef @SAINT32_TYPE@ saint_t;
+typedef int32_t saint_t;
 #endif /* SAINT_T */
-#ifndef SAIDX@W64BIT@_T
-#define SAIDX@W64BIT@_T
-typedef @SAINDEX_TYPE@ saidx@W64BIT@_t;
-#endif /* SAIDX@W64BIT@_T */
+#ifndef SAIDX_T
+#define SAIDX_T
+#ifdef LONG
+  typedef int64_t saidx_t;
+#else
+  typedef int32_t saidx_t;
+#endif
+#endif /* SAIDX_T */
 #ifndef PRIdSAINT_T
-#define PRIdSAINT_T @SAINT_PRId@
+#define PRIdSAINT_T PRId32
 #endif /* PRIdSAINT_T */
-#ifndef PRIdSAIDX@W64BIT@_T
-#define PRIdSAIDX@W64BIT@_T @SAINDEX_PRId@
-#endif /* PRIdSAIDX@W64BIT@_T */
+#ifndef PRIdSAIDX_T
+#define PRIdSAIDX_T PRId32
+#endif /* PRIdSAIDX_T */
 
 
 /*- Prototypes -*/
@@ -73,7 +77,7 @@ typedef @SAINDEX_TYPE@ saidx@W64BIT@_t;
  */
 DIVSUFSORT_API
 saint_t
-divsufsort@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t *SA, saidx@W64BIT@_t n);
+divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n);
 
 /**
  * Constructs the burrows-wheeler transformed string of a given string.
@@ -84,8 +88,8 @@ divsufsort@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t *SA, saidx@W64BIT@_t n);
  * @return The primary index if no error occurred, -1 or -2 otherwise.
  */
 DIVSUFSORT_API
-saidx@W64BIT@_t
-divbwt@W64BIT@(const sauchar_t *T, sauchar_t *U, saidx@W64BIT@_t *A, saidx@W64BIT@_t n);
+saidx_t
+divbwt(const sauchar_t *T, sauchar_t *U, saidx_t *A, saidx_t n);
 
 /**
  * Returns the version of the divsufsort library.
@@ -93,7 +97,7 @@ divbwt@W64BIT@(const sauchar_t *T, sauchar_t *U, saidx@W64BIT@_t *A, saidx@W64BI
  */
 DIVSUFSORT_API
 const char *
-divsufsort@W64BIT@_version(void);
+divsufsort_version(void);
 
 
 /**
@@ -107,9 +111,9 @@ divsufsort@W64BIT@_version(void);
  */
 DIVSUFSORT_API
 saint_t
-bw_transform@W64BIT@(const sauchar_t *T, sauchar_t *U,
-             saidx@W64BIT@_t *SA /* can NULL */,
-             saidx@W64BIT@_t n, saidx@W64BIT@_t *idx);
+bw_transform(const sauchar_t *T, sauchar_t *U,
+             saidx_t *SA /* can NULL */,
+             saidx_t n, saidx_t *idx);
 
 /**
  * Inverse BW-transforms a given BWTed string.
@@ -122,9 +126,9 @@ bw_transform@W64BIT@(const sauchar_t *T, sauchar_t *U,
  */
 DIVSUFSORT_API
 saint_t
-inverse_bw_transform@W64BIT@(const sauchar_t *T, sauchar_t *U,
-                     saidx@W64BIT@_t *A /* can NULL */,
-                     saidx@W64BIT@_t n, saidx@W64BIT@_t idx);
+inverse_bw_transform(const sauchar_t *T, sauchar_t *U,
+                     saidx_t *A /* can NULL */,
+                     saidx_t n, saidx_t idx);
 
 /**
  * Checks the correctness of a given suffix array.
@@ -136,7 +140,7 @@ inverse_bw_transform@W64BIT@(const sauchar_t *T, sauchar_t *U,
  */
 DIVSUFSORT_API
 saint_t
-sufcheck@W64BIT@(const sauchar_t *T, const saidx@W64BIT@_t *SA, saidx@W64BIT@_t n, saint_t verbose);
+sufcheck(const sauchar_t *T, const saidx_t *SA, saidx_t n, saint_t verbose);
 
 /**
  * Search for the pattern P in the string T.
@@ -150,11 +154,11 @@ sufcheck@W64BIT@(const sauchar_t *T, const saidx@W64BIT@_t *SA, saidx@W64BIT@_t 
  * @return The count of matches if no error occurred, -1 otherwise.
  */
 DIVSUFSORT_API
-saidx@W64BIT@_t
-sa_search@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t Tsize,
-          const sauchar_t *P, saidx@W64BIT@_t Psize,
-          const saidx@W64BIT@_t *SA, saidx@W64BIT@_t SAsize,
-          saidx@W64BIT@_t *left);
+saidx_t
+sa_search(const sauchar_t *T, saidx_t Tsize,
+          const sauchar_t *P, saidx_t Psize,
+          const saidx_t *SA, saidx_t SAsize,
+          saidx_t *left);
 
 /**
  * Search for the character c in the string T.
@@ -167,14 +171,14 @@ sa_search@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t Tsize,
  * @return The count of matches if no error occurred, -1 otherwise.
  */
 DIVSUFSORT_API
-saidx@W64BIT@_t
-sa_simplesearch@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t Tsize,
-                const saidx@W64BIT@_t *SA, saidx@W64BIT@_t SAsize,
-                saint_t c, saidx@W64BIT@_t *left);
+saidx_t
+sa_simplesearch(const sauchar_t *T, saidx_t Tsize,
+                const saidx_t *SA, saidx_t SAsize,
+                saint_t c, saidx_t *left);
 
 
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
 
-#endif /* _DIVSUFSORT@W64BIT@_H */
+#endif /* _DIVSUFSORT_H */

@@ -27,6 +27,7 @@
 #include "divsufsort_private.h"
 
 
+
 /*- Private Functions -*/
 
 static const saint_t lg_table[256]= {
@@ -42,7 +43,7 @@ static const saint_t lg_table[256]= {
 
 #if (SS_BLOCKSIZE == 0) || (SS_INSERTIONSORT_THRESHOLD < SS_BLOCKSIZE)
 
-static INLINE
+static inline
 saint_t
 ss_ilg(saidx_t n) {
 #if SS_BLOCKSIZE == 0
@@ -103,7 +104,7 @@ static const saint_t sqq_table[256] = {
 247, 248, 248, 249, 249, 250, 250, 251, 251, 252, 252, 253, 253, 254, 254, 255
 };
 
-static INLINE
+static inline
 saidx_t
 ss_isqrt(saidx_t x) {
   saidx_t y, e;
@@ -136,7 +137,7 @@ ss_isqrt(saidx_t x) {
 /*---------------------------------------------------------------------------*/
 
 /* Compares two suffixes. */
-static INLINE
+static inline
 saint_t
 ss_compare(const sauchar_t *T,
            const saidx_t *p1, const saidx_t *p2,
@@ -187,7 +188,7 @@ ss_insertionsort(const sauchar_t *T, const saidx_t *PA,
 
 #if (SS_BLOCKSIZE == 0) || (SS_INSERTIONSORT_THRESHOLD < SS_BLOCKSIZE)
 
-static INLINE
+static inline
 void
 ss_fixdown(const sauchar_t *Td, const saidx_t *PA,
            saidx_t *SA, saidx_t i, saidx_t size) {
@@ -229,7 +230,7 @@ ss_heapsort(const sauchar_t *Td, const saidx_t *PA, saidx_t *SA, saidx_t size) {
 /*---------------------------------------------------------------------------*/
 
 /* Returns the median of three elements. */
-static INLINE
+static inline
 saidx_t *
 ss_median3(const sauchar_t *Td, const saidx_t *PA,
            saidx_t *v1, saidx_t *v2, saidx_t *v3) {
@@ -243,7 +244,7 @@ ss_median3(const sauchar_t *Td, const saidx_t *PA,
 }
 
 /* Returns the median of five elements. */
-static INLINE
+static inline
 saidx_t *
 ss_median5(const sauchar_t *Td, const saidx_t *PA,
            saidx_t *v1, saidx_t *v2, saidx_t *v3, saidx_t *v4, saidx_t *v5) {
@@ -258,7 +259,7 @@ ss_median5(const sauchar_t *Td, const saidx_t *PA,
 }
 
 /* Returns the pivot element. */
-static INLINE
+static inline
 saidx_t *
 ss_pivot(const sauchar_t *Td, const saidx_t *PA, saidx_t *first, saidx_t *last) {
   saidx_t *middle;
@@ -286,7 +287,7 @@ ss_pivot(const sauchar_t *Td, const saidx_t *PA, saidx_t *first, saidx_t *last) 
 /*---------------------------------------------------------------------------*/
 
 /* Binary partition for substrings. */
-static INLINE
+static inline
 saidx_t *
 ss_partition(const saidx_t *PA,
                     saidx_t *first, saidx_t *last, saidx_t depth) {
@@ -447,7 +448,7 @@ ss_mintrosort(const sauchar_t *T, const saidx_t *PA,
 
 #if SS_BLOCKSIZE != 0
 
-static INLINE
+static inline
 void
 ss_blockswap(saidx_t *a, saidx_t *b, saidx_t n) {
   saidx_t t;
@@ -456,7 +457,7 @@ ss_blockswap(saidx_t *a, saidx_t *b, saidx_t n) {
   }
 }
 
-static INLINE
+static inline
 void
 ss_rotate(saidx_t *first, saidx_t *middle, saidx_t *last) {
   saidx_t *a, *b, t;
