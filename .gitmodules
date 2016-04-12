@@ -1,0 +1,3 @@
+[submodule "external/libprange"]
+	path = external/libprange
+	url = git://github.com/jlabeit/parallel-range-lite.git
