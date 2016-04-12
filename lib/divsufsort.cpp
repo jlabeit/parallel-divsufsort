@@ -31,6 +31,9 @@
 #ifdef _OPENMP
 # include <omp.h>
 #endif
+// TODO: Fix include paths.
+#include "/home/julian/libdivsufsort/external/libprange/include/parallel-range.h"
+
 /*- Private Functions -*/
 void calculateBucketOffsets(saidx_t * bucket_A, saidx_t* bucket_B) {
 /*
@@ -284,8 +287,9 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 
     buf = SA + (2*m);
     bufsize = n - (2*m);
-    //paralleltrsort(ISAb, SA, m, buf, bufsize);
-    trsort(ISAb, SA, m, 1); // TODO reset.
+    //parallelrangelight(ISAb, SA, m, buf, bufsize);
+    parallelrangelight(ISAb, SA, m);
+    //trsort(ISAb, SA, m, 1); // TODO reset.
 
     // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
     block_size = n / num_blocks + 1; // Use same blocks as when initializing bstar_count !
