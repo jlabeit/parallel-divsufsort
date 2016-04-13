@@ -31,8 +31,7 @@
 #ifdef _OPENMP
 # include <omp.h>
 #endif
-// TODO: Fix include paths.
-#include "/home/julian/libdivsufsort/external/libprange/include/parallel-range.h"
+#include "parallel-range.h"
 
 /*- Private Functions -*/
 void calculateBucketOffsets(saidx_t * bucket_A, saidx_t* bucket_B) {
