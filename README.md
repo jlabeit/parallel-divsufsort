@@ -1,4 +1,4 @@
-# libdivsufsort
+# Parallel libdivsufsort
 
 libdivsufsort is a software library that implements a lightweight suffix array construction algorithm.
 
