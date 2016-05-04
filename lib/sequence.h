@@ -24,7 +24,7 @@
 #define A_SEQUENCE_INCLUDED
 
 #include <iostream>
-#include "parallel.h"
+#include "parallel.hpp"
 #include "utils.h"
 
 // For fast popcount

@@ -24,7 +24,7 @@
 #define _BENCH_UTILS_INCLUDED
 #include <iostream>
 #include <algorithm>
-#include "parallel.h"
+#include "parallel.hpp"
 
 #if defined(__APPLE__)
 #define PTCMPXCH "  cmpxchgl %2,%1\n"
