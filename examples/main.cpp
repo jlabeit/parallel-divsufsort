@@ -16,7 +16,7 @@ void printPos(int pos, string& text) {
 
 int main(int argc, char* args[]) {
 	if (argc != 2) {
-		cout << "Expected two arguments (input and output file)."
+		cout << "Expected one argument (input file)."
 			<< endl;	
 		return -1;
 	}
@@ -30,7 +30,7 @@ int main(int argc, char* args[]) {
 		text.assign((istreambuf_iterator<char>(input_file)),
 				istreambuf_iterator<char>());
 	}
-	text += '\0';
+	//text += '\0';
 	int size = text.size();
 	int *SA = new int[size];
 	auto start = chrono::steady_clock::now();
