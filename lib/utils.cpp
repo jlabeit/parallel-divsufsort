@@ -31,6 +31,7 @@
 /*- Private Function -*/
 
 /* Binary search for inverse bwt. */
+template<class saidx_t>
 static
 saidx_t
 binarysearch_lower(const saidx_t *A, saidx_t size, saidx_t value) {
@@ -50,6 +51,7 @@ binarysearch_lower(const saidx_t *A, saidx_t size, saidx_t value) {
 /*- Functions -*/
 
 /* Burrows-Wheeler transform. */
+template<class saidx_t>
 saint_t
 bw_transform(const sauchar_t *T, sauchar_t *U, saidx_t *SA,
              saidx_t n, saidx_t *idx) {
@@ -109,6 +111,7 @@ bw_transform(const sauchar_t *T, sauchar_t *U, saidx_t *SA,
 }
 
 /* Inverse Burrows-Wheeler transform. */
+template<class saidx_t>
 saint_t
 inverse_bw_transform(const sauchar_t *T, sauchar_t *U, saidx_t *A,
                      saidx_t n, saidx_t idx) {
@@ -158,6 +161,7 @@ inverse_bw_transform(const sauchar_t *T, sauchar_t *U, saidx_t *A,
 }
 
 /* Checks the suffix array SA of the string T. */
+template<class saidx_t>
 saint_t
 sufcheck(const sauchar_t *T, const saidx_t *SA,
          saidx_t n, saint_t verbose) {
@@ -239,6 +243,7 @@ sufcheck(const sauchar_t *T, const saidx_t *SA,
 }
 
 
+template<class saidx_t>
 static
 int
 _compare(const sauchar_t *T, saidx_t Tsize,
@@ -253,6 +258,7 @@ _compare(const sauchar_t *T, saidx_t Tsize,
 }
 
 /* Search for the pattern P in the string T. */
+template<class saidx_t>
 saidx_t
 sa_search(const sauchar_t *T, saidx_t Tsize,
           const sauchar_t *P, saidx_t Psize,
@@ -323,6 +329,7 @@ sa_search(const sauchar_t *T, saidx_t Tsize,
 }
 
 /* Search for the character c in the string T. */
+template<class saidx_t>
 saidx_t
 sa_simplesearch(const sauchar_t *T, saidx_t Tsize,
                 const saidx_t *SA, saidx_t SAsize,

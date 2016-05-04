@@ -14,6 +14,8 @@ void printPos(int pos, string& text) {
 	} cout << endl;
 }
 
+typedef int32_t num_type; // Currently only int32_t and int64_t are supported.
+
 int main(int argc, char* args[]) {
 	if (argc != 2) {
 		cout << "Expected one argument (input file)."
@@ -31,8 +33,8 @@ int main(int argc, char* args[]) {
 				istreambuf_iterator<char>());
 	}
 	//text += '\0';
-	int size = text.size();
-	int *SA = new int[size];
+	num_type size = text.size();
+	num_type *SA = new num_type[size];
 	auto start = chrono::steady_clock::now();
 	divsufsort((sauchar_t*)text.data(), SA, size);
 	auto end = chrono::steady_clock::now();

@@ -31,8 +31,6 @@
 /*- Datatypes -*/
 typedef uint8_t sauchar_t;
 typedef int32_t saint_t;
-//typedef int64_t saidx_t;
-typedef int32_t saidx_t;
 
 /*- Prototypes -*/
 
@@ -44,7 +42,9 @@ typedef int32_t saidx_t;
  * @return 0 if no error occurred, -1 or -2 otherwise.
  */
 saint_t
-divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n);
+divsufsort(const sauchar_t *T, int32_t *SA, int32_t n);
+saint_t
+divsufsort(const sauchar_t *T, int64_t *SA, int64_t n);
 
 /**
  * Constructs the burrows-wheeler transformed string of a given string.
@@ -54,8 +54,8 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n);
  * @param n The length of the given string.
  * @return The primary index if no error occurred, -1 or -2 otherwise.
  */
-saidx_t
-divbwt(const sauchar_t *T, sauchar_t *U, saidx_t *A, saidx_t n);
+//saidx_t
+//divbwt(const sauchar_t *T, sauchar_t *U, saidx_t *A, saidx_t n);
 
 
 /**
@@ -67,10 +67,10 @@ divbwt(const sauchar_t *T, sauchar_t *U, saidx_t *A, saidx_t n);
  * @param idx The output primary index.
  * @return 0 if no error occurred, -1 or -2 otherwise.
  */
-saint_t
-bw_transform(const sauchar_t *T, sauchar_t *U,
-             saidx_t *SA /* can NULL */,
-             saidx_t n, saidx_t *idx);
+//saint_t
+//bw_transform(const sauchar_t *T, sauchar_t *U,
+//             saidx_t *SA /* can NULL */,
+//             saidx_t n, saidx_t *idx);
 
 /**
  * Inverse BW-transforms a given BWTed string.
@@ -81,10 +81,10 @@ bw_transform(const sauchar_t *T, sauchar_t *U,
  * @param idx The primary index.
  * @return 0 if no error occurred, -1 or -2 otherwise.
  */
-saint_t
-inverse_bw_transform(const sauchar_t *T, sauchar_t *U,
-                     saidx_t *A /* can NULL */,
-                     saidx_t n, saidx_t idx);
+//saint_t
+//inverse_bw_transform(const sauchar_t *T, sauchar_t *U,
+//                     saidx_t *A /* can NULL */,
+//                     saidx_t n, saidx_t idx);
 
 /**
  * Checks the correctness of a given suffix array.
@@ -94,8 +94,8 @@ inverse_bw_transform(const sauchar_t *T, sauchar_t *U,
  * @param verbose The verbose mode.
  * @return 0 if no error occurred.
  */
-saint_t
-sufcheck(const sauchar_t *T, const saidx_t *SA, saidx_t n, saint_t verbose);
+//saint_t
+//sufcheck(const sauchar_t *T, const saidx_t *SA, saidx_t n, saint_t verbose);
 
 /**
  * Search for the pattern P in the string T.
@@ -108,11 +108,11 @@ sufcheck(const sauchar_t *T, const saidx_t *SA, saidx_t n, saint_t verbose);
  * @param idx The output index.
  * @return The count of matches if no error occurred, -1 otherwise.
  */
-saidx_t
-sa_search(const sauchar_t *T, saidx_t Tsize,
-          const sauchar_t *P, saidx_t Psize,
-          const saidx_t *SA, saidx_t SAsize,
-          saidx_t *left);
+//saidx_t
+//sa_search(const sauchar_t *T, saidx_t Tsize,
+//          const sauchar_t *P, saidx_t Psize,
+//          const saidx_t *SA, saidx_t SAsize,
+//          saidx_t *left);
 
 /**
  * Search for the character c in the string T.
@@ -124,9 +124,8 @@ sa_search(const sauchar_t *T, saidx_t Tsize,
  * @param idx The output index.
  * @return The count of matches if no error occurred, -1 otherwise.
  */
-saidx_t
-sa_simplesearch(const sauchar_t *T, saidx_t Tsize,
-                const saidx_t *SA, saidx_t SAsize,
-                saint_t c, saidx_t *left);
-
+//saidx_t
+//sa_simplesearch(const sauchar_t *T, saidx_t Tsize,
+//                const saidx_t *SA, saidx_t SAsize,
+//                saint_t c, saidx_t *left);
 #endif /* _DIVSUFSORT_H */

@@ -34,6 +34,7 @@
 #include "parallel-range.h"
 
 /*- Private Functions -*/
+template<class saidx_t>
 void calculateBucketOffsets(saidx_t * bucket_A, saidx_t* bucket_B) {
 /*
 note:
@@ -56,6 +57,7 @@ note:
 }
 
 
+template<class saidx_t>
 void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_t n, saidx_t m, saidx_t* PAb) {
     saidx_t num_blocks = getWorkers();
     saidx_t block_size = (m-1) / num_blocks + 1;    
@@ -103,6 +105,7 @@ void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_
 }
 
 
+template<class saidx_t>
 void initBuckets(const sauchar_t *T, saidx_t *SA,
                saidx_t *bucket_A, saidx_t *bucket_B,
                saidx_t n, saidx_t& m,
@@ -193,6 +196,7 @@ void initBuckets(const sauchar_t *T, saidx_t *SA,
 
 
 /* Sorts suffixes of type B*. */
+template<class saidx_t>
 static
 saidx_t
 sort_typeBstar(const sauchar_t *T, saidx_t *SA,
@@ -236,7 +240,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 		j = m;
 	}
         if(1 < (j - i)) {
-         sssort(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
+         sssort<saidx_t>(T, PAb, SA + i, SA + j, buf, bufsize, 2, n, *(SA + i) == (m - 1));
         }
       }
     }
@@ -338,6 +342,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
 
 
 
+template<class saidx_t>
 class cached_bucket_writer {
 	private:
 	static const saidx_t BUF_SIZE = 64;
@@ -415,6 +420,7 @@ class cached_bucket_writer {
 	}
 };
 
+template<class saidx_t>
 void countBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, const sauchar_t* T) {
 	// Set counters to 0
 	memset(bucket_B, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
@@ -428,7 +434,9 @@ void countBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, const sauchar_
 	}
 }
 
-void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t block, sauchar_t c1, const sauchar_t* T, cached_bucket_writer &bucket_writer) {
+template<class saidx_t>
+void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t block, sauchar_t c1,
+		const sauchar_t* T, cached_bucket_writer<saidx_t> &bucket_writer) {
 	saidx_t s;
 	sauchar_t c0;
 	for (saidx_t* i = start-1; i >= end; i--) {
@@ -443,7 +451,9 @@ void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t block, sauchar_t c1, const
 	}
 }
 
-void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, const sauchar_t* T, saidx_t* SA) {
+template<class saidx_t>
+void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1,
+		const sauchar_t* T, saidx_t* SA) {
 	saidx_t s;
 	sauchar_t c0;
 	for (saidx_t* i = start-1; i >= end; i--) {
@@ -459,7 +469,9 @@ void fillBBSeq (saidx_t* start, saidx_t* end, saidx_t* bucket_B, saint_t c1, con
 }
 
 
-void countASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T) {
+template<class saidx_t>
+void countASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A,
+		const sauchar_t* T) {
 	memset(bucket_A, 0, sizeof(saidx_t)*BUCKET_A_SIZE);
 	saidx_t s;
 	sauchar_t c0;
@@ -473,7 +485,9 @@ void countASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t
 
 }
 
-void fillASeq (saidx_t* start, saidx_t* end, saidx_t block, const sauchar_t* T, cached_bucket_writer &bucket_writer) {
+template<class saidx_t>
+void fillASeq (saidx_t* start, saidx_t* end, saidx_t block,
+		const sauchar_t* T, cached_bucket_writer<saidx_t> &bucket_writer) {
 	saidx_t s;
 	sauchar_t c0;
 	for (saidx_t* i = start; i < end; i++) {
@@ -489,7 +503,9 @@ void fillASeq (saidx_t* start, saidx_t* end, saidx_t block, const sauchar_t* T, 
 	}
 }
 
-void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t* T, saidx_t* SA) {
+template<class saidx_t>
+void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A,
+		const sauchar_t* T, saidx_t* SA) {
 	saidx_t s;
 	sauchar_t c0;
 	for (saidx_t* i = start; i < end; i++) {
@@ -506,6 +522,7 @@ void fillASeq (saidx_t* start, saidx_t* end, saidx_t* bucket_A, const sauchar_t*
 
 
 /* Constructs the suffix array by using the sorted order of type B* suffixes. */
+template<class saidx_t>
 static
 void
 construct_SA(const sauchar_t *T, saidx_t *SA,
@@ -513,7 +530,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
              saidx_t n, saidx_t m) {
   const saidx_t num_blocks = getWorkers();
   saidx_t* block_bucket_cnt = newA(saidx_t, num_blocks*BUCKET_A_SIZE);
-  cached_bucket_writer bucket_writer(num_blocks, block_bucket_cnt, BUCKET_A_SIZE, SA); 
+  cached_bucket_writer<saidx_t> bucket_writer(num_blocks, block_bucket_cnt, BUCKET_A_SIZE, SA); 
   // Use buffered writing to handle chache invalidations
   if(0 < m) {
 	  /* Construct the sorted order of type B suffixes by using
@@ -616,6 +633,7 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
 
 /* Constructs the burrows-wheeler transformed string directly
    by using the sorted order of type B* suffixes. */
+template<class saidx_t>
 static
 saidx_t
 construct_BWT(const sauchar_t *T, saidx_t *SA,
@@ -689,7 +707,7 @@ construct_BWT(const sauchar_t *T, saidx_t *SA,
 /*---------------------------------------------------------------------------*/
 
 /*- Function -*/
-
+template<class saidx_t>
 saint_t
 divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   saidx_t *bucket_A, *bucket_B;
@@ -719,6 +737,7 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
   return err;
 }
 
+template<class saidx_t>
 saidx_t
 divbwt(const sauchar_t *T, sauchar_t *U, saidx_t *A, saidx_t n) {
   saidx_t *B;
@@ -754,3 +773,11 @@ divbwt(const sauchar_t *T, sauchar_t *U, saidx_t *A, saidx_t n) {
   return pidx;
 }
 
+saint_t
+divsufsort(const sauchar_t *T, int32_t *SA, int32_t n) {
+	return divsufsort<int32_t>(T, SA, n);
+}
+saint_t
+divsufsort(const sauchar_t *T, int64_t *SA, int64_t n) {
+	return divsufsort<int64_t>(T, SA, n);
+}

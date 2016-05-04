@@ -40,6 +40,7 @@ static const saint_t lg_table[256]= {
   7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
 };
 
+template<class saidx_t>
 static inline
 saint_t
 tr_ilg(saidx_t n) {
@@ -74,6 +75,7 @@ tr_ilg(saidx_t n) {
 /*---------------------------------------------------------------------------*/
 
 /* Simple insertionsort for small size groups. */
+template<class saidx_t>
 static
 void
 tr_insertionsort(const saidx_t *ISAd, saidx_t *first, saidx_t *last) {
@@ -93,6 +95,7 @@ tr_insertionsort(const saidx_t *ISAd, saidx_t *first, saidx_t *last) {
 
 /*---------------------------------------------------------------------------*/
 
+template<class saidx_t>
 static inline
 void
 tr_fixdown(const saidx_t *ISAd, saidx_t *SA, saidx_t i, saidx_t size) {
@@ -109,6 +112,7 @@ tr_fixdown(const saidx_t *ISAd, saidx_t *SA, saidx_t i, saidx_t size) {
 }
 
 /* Simple top-down heapsort. */
+template<class saidx_t>
 static
 void
 tr_heapsort(const saidx_t *ISAd, saidx_t *SA, saidx_t size) {
@@ -134,6 +138,7 @@ tr_heapsort(const saidx_t *ISAd, saidx_t *SA, saidx_t size) {
 /*---------------------------------------------------------------------------*/
 
 /* Returns the median of three elements. */
+template<class saidx_t>
 static inline
 saidx_t *
 tr_median3(const saidx_t *ISAd, saidx_t *v1, saidx_t *v2, saidx_t *v3) {
@@ -147,6 +152,7 @@ tr_median3(const saidx_t *ISAd, saidx_t *v1, saidx_t *v2, saidx_t *v3) {
 }
 
 /* Returns the median of five elements. */
+template<class saidx_t>
 static inline
 saidx_t *
 tr_median5(const saidx_t *ISAd,
@@ -162,6 +168,7 @@ tr_median5(const saidx_t *ISAd,
 }
 
 /* Returns the pivot element. */
+template<class saidx_t>
 static inline
 saidx_t *
 tr_pivot(const saidx_t *ISAd, saidx_t *first, saidx_t *last) {
@@ -189,24 +196,26 @@ tr_pivot(const saidx_t *ISAd, saidx_t *first, saidx_t *last) {
 
 /*---------------------------------------------------------------------------*/
 
-typedef struct _trbudget_t trbudget_t;
-struct _trbudget_t {
+template<class saidx_t>
+struct trbudget_t {
   saidx_t chance;
   saidx_t remain;
   saidx_t incval;
   saidx_t count;
 };
 
+template<class saidx_t>
 static inline
 void
-trbudget_init(trbudget_t *budget, saidx_t chance, saidx_t incval) {
+trbudget_init(trbudget_t<saidx_t> *budget, saidx_t chance, saidx_t incval) {
   budget->chance = chance;
   budget->remain = budget->incval = incval;
 }
 
+template<class saidx_t>
 static inline
 saint_t
-trbudget_check(trbudget_t *budget, saidx_t size) {
+trbudget_check(trbudget_t<saidx_t> *budget, saidx_t size) {
   if(size <= budget->remain) { budget->remain -= size; return 1; }
   if(budget->chance == 0) { budget->count += size; return 0; }
   budget->remain += budget->incval - size;
@@ -217,6 +226,7 @@ trbudget_check(trbudget_t *budget, saidx_t size) {
 
 /*---------------------------------------------------------------------------*/
 
+template<class saidx_t>
 static inline
 void
 tr_partition(const saidx_t *ISAd,
@@ -259,6 +269,7 @@ tr_partition(const saidx_t *ISAd,
   *pa = first, *pb = last;
 }
 
+template<class saidx_t>
 static
 void
 tr_copy(saidx_t *ISA, const saidx_t *SA,
@@ -284,6 +295,7 @@ tr_copy(saidx_t *ISA, const saidx_t *SA,
   }
 }
 
+template<class saidx_t>
 static
 void
 tr_partialcopy(saidx_t *ISA, const saidx_t *SA,
@@ -322,11 +334,12 @@ tr_partialcopy(saidx_t *ISA, const saidx_t *SA,
   }
 }
 
+template<class saidx_t>
 static
 void
 tr_introsort(saidx_t *ISA, const saidx_t *ISAd,
              saidx_t *SA, saidx_t *first, saidx_t *last,
-             trbudget_t *budget) {
+             trbudget_t<saidx_t> *budget) {
 #define STACK_SIZE TR_STACKSIZE
   struct { const saidx_t *a; saidx_t *b, *c; saint_t d, e; }stack[STACK_SIZE];
   saidx_t *a, *b, *c;
@@ -551,11 +564,12 @@ tr_introsort(saidx_t *ISA, const saidx_t *ISAd,
 /*- Function -*/
 
 /* Tandem repeat sort */
+template<class saidx_t>
 void
 trsort(saidx_t *ISA, saidx_t *SA, saidx_t n, saidx_t depth) {
   saidx_t *ISAd;
   saidx_t *first, *last;
-  trbudget_t budget;
+  trbudget_t<saidx_t> budget;
   saidx_t t, skip, unsorted;
 
   trbudget_init(&budget, tr_ilg(n) * 2 / 3, n);
