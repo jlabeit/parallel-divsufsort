@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 INCLUDE (CheckIncludeFiles)
 include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/AppendCompilerFlags.cmake")
 
-project (Parallel-Range-Light CXX)
+project (Parallel-Divsufsort CXX)
 set(PROJECT_VENDOR "Julian Labeit")
 set(PROJECT_CONTACT "julianlabeit@gmail.com")
 set(PROJECT_URL "https://github.com/jlabeit/parallel-divsufsort")
