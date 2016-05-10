@@ -4,7 +4,7 @@ Description
 Parallel-DivSufSort is a parallel lightweight suffix array construction algorithm for byte alphabets written in C++.
 It is a implementation based on:
 + [divsufsort](https://github.com/y-256/libdivsufsort) implementation of induced sorting by Yuta Mori.
-+ [parallel-range-light](https://github.com/jlabeit/parallel-range-light) implementation of prefix doubling for integer alphabets. 
++ [parallel-range-light](https://github.com/jlabeit/parallel-range-lite) implementation of prefix doubling for integer alphabets. 
 
 A detailed description and benchmarks of the algorithm can be found in the following work.
 > Julian Labeit, Julian Shun, and Guy E. Blelloch. Parallel Lightweight Wavelet Tree, Suffix Array and FM-Index Construction. DCC 2015.
