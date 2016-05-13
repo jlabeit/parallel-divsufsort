@@ -41,6 +41,8 @@ int main(int argc, char* args[]) {
 	auto diff = end - start;
 	cout << "Parallel Divsufsort time: " <<
 		chrono::duration <double, milli> (diff).count()<< " ms" << endl;
+	if (!sufcheck((sauchar_t*)text.data(), SA, size, true))
+		return -1;
 	return 0;
 
 }

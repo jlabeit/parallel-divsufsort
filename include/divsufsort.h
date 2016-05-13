@@ -94,9 +94,10 @@ divsufsort(const sauchar_t *T, int64_t *SA, int64_t n);
  * @param verbose The verbose mode.
  * @return 0 if no error occurred.
  */
-//saint_t
-//sufcheck(const sauchar_t *T, const saidx_t *SA, saidx_t n, saint_t verbose);
-
+saint_t sufcheck(const sauchar_t *T, const int32_t *SA,
+		int32_t n, saint_t verbose); 
+saint_t sufcheck(const sauchar_t *T, const int64_t *SA,
+		int64_t n, saint_t verbose);
 /**
  * Search for the pattern P in the string T.
  * @param T[0..Tsize-1] The input string.

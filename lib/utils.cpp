@@ -242,6 +242,17 @@ sufcheck(const sauchar_t *T, const saidx_t *SA,
   return 0;
 }
 
+// Template instantiation for linker.
+saint_t
+sufcheck(const sauchar_t *T, const int32_t *SA,
+         int32_t n, saint_t verbose) {
+	return sufcheck<int32_t>(T, SA, n, verbose);
+}
+saint_t
+sufcheck(const sauchar_t *T, const int64_t *SA,
+         int64_t n, saint_t verbose) {
+	return sufcheck<int64_t>(T, SA, n, verbose);
+}
 
 template<class saidx_t>
 static
