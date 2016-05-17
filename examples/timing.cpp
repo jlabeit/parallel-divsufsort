@@ -8,13 +8,8 @@
 
 using namespace std;
 
-void printPos(int pos, string& text) {
-	for (int i = 0; i < 10 && i + pos < (int)text.size(); ++i) {
-		cout << text[i+pos];
-	} cout << endl;
-}
-
 typedef int32_t num_type; // Currently only int32_t and int64_t are supported.
+int times = 3; // How often the time measurement is repeated.
 
 int main(int argc, char* args[]) {
 	if (argc != 2) {
@@ -35,16 +30,19 @@ int main(int argc, char* args[]) {
 	//text += '\0';
 	num_type size = text.size();
 	num_type *SA = new num_type[size];
-	auto start = chrono::steady_clock::now();
-	divsufsort((sauchar_t*)text.data(), SA, size);
-	auto end = chrono::steady_clock::now();
-	auto diff = end - start;
-	cout << "Parallel Divsufsort time: " <<
-		chrono::duration <double, milli> (diff).count()<< " ms" << endl;
+	for (int i = 0; i < times; ++i) {
+		auto start = chrono::steady_clock::now();
+		divsufsort((sauchar_t*)text.data(), SA, size);
+		auto end = chrono::steady_clock::now();
+		auto diff = end - start;
+		cout <<	chrono::duration <double, milli> (diff).count();
+		cout.flush();
+		if (i < times -1) cout << ", ";
+	}
+	cout << endl;
 	if (sufcheck((sauchar_t*)text.data(), SA, size, false)) {
 		cout << "Sufcheck failed!" << endl;
 		return -1;
 	}
 	return 0;
-
 }
