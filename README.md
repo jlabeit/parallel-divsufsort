@@ -25,7 +25,7 @@ Note that in the default version the cilkplus implementation by gcc is used for 
 To change this setting edit parallelization settings in the CMakeLists.txt file.
 
 Getting Started
-=========
+==========
 An example application can be found in examples/main.cpp.
 The library provides two basic functions to build the suffix array over a text.
 
@@ -38,3 +38,6 @@ uint8_t divsufsort(const uint8_t *T, int64_t *SA, int64_t n);
 
 To use the library include the header `divsufsort.h`, link against the library `divsufsort` and `libprange`.
 
+Benchmarks
+==========
+See [Benchmarks](https://github.com/jlabeit/parallel-divsufsort/blob/master/benchmarks/OVERVIEW.md) page for details.
