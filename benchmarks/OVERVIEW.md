@@ -4,7 +4,7 @@ Specifications
   * Processors:       4 X 12 X 1.9Ghz AMD Opteron(tm) Processor 6168 (48 Processors)
   * L1 Cache:         64 KB
   * L2 Cache:         512 KB 
-  * RAM:              2 Gb main memory
+  * RAM:              256 Gb main memory
   * Operating system: Ubuntu 12.04.5 LTS
   * Compiler:         GCC version 5.2.0
   * Opt-Flags:       '-O2 -ffast-math -funroll-loops'
