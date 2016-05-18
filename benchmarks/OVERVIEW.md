@@ -39,13 +39,13 @@ The following tables compare running times and memory consumption of the origina
 
 Running times here stated in seconds.
 
-|  Files         | File Size |  divsufsort  |
-|:---------------|----------:|-------------:|
-|  dblp.xml      |   295     |  1413        |
-|  dna           |   385     |  1927        |
-|  english       |  1024     |  5121        |
-|  pitches       |    53     |   267        |
-|  proteins      |  1129     |  5647        |
-|  sources       |   201     |  1006        |
+|  Files         | File Size |  divsufsort  |  1   |  2   |  4   |  8   | 16   | 32   | 48   |
+|:---------------|----------:|-------------:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|
+|  dblp.xml      |   295     |  1413        | 1853 | 1859 | 1870 | 1891 | 1915 | 1926 | 1939 |
+|  dna           |   385     |  1927        | 2504 | 2508 | 2511 | 2519 | 2526 | 2545 | 2555 |
+|  english       |  1024     |  5121        | 6878 | 6883 | 6892 | 6904 | 6921 | 6930 | 6956 |
+|  pitches       |    53     |   267        |  350 |  351 |  351 |  352 |  354 |  359 |  363 |
+|  proteins      |  1129     |  5647        | 7634 | 7635 | 7636 | 7638 | 7641 | 7649 | 7656 |
+|  sources       |   201     |  1006        | 1314 | 1315 | 1317 | 1319 | 1323 | 1331 | 1339 |
 
 Memory consumption stated in mega bytes.
