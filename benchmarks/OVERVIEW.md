@@ -19,7 +19,8 @@ Test Files
 ==========
 
 The text collection from the [Pizza & Chilli](http://pizzachili.dcc.uchile.cl) corpus was used for the benchmarks.
-Remarks: For all but the input file 'english' the full version of the text file was used. 
+
+*Remarks:* For all but the input file 'english' the full version of the text file was used. 
 For the input 'english' the 1024Mb version was used.
 
 Results
@@ -36,7 +37,7 @@ The following tables compare running times and memory consumption of the origina
 |  proteins      |  1129     |    457.6     | 
 |  sources       |   201     |     40.4     | 
 
-Runnin times here measured in seconds.
+Running times here stated in seconds.
 
 |  Files         | File Size |  divsufsort  |
 |:---------------|----------:|-------------:|
@@ -47,4 +48,4 @@ Runnin times here measured in seconds.
 |  proteins      |  1129     |  5647        |
 |  sources       |   201     |  1006        |
 
-Memory consumption is stated in MB.
+Memory consumption stated in mega bytes.
