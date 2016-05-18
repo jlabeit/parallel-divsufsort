@@ -28,14 +28,14 @@ Results
 
 The following tables compare running times and memory consumption of the original divsufsort with parallel-divsufsort with different thread count.
 
-|  Files         | File Size |  divsufsort  |
-|:---------------|----------:|-------------:|
-|  dblp.xml      |   295     |     65.1     |
-|  dna           |   385     |    145.0     | 
-|  english       |  1024     |    417.5     | 
-|  pitches       |    53     |      9.1     | 
-|  proteins      |  1129     |    457.6     | 
-|  sources       |   201     |     40.4     | 
+|  Files         | File Size |  divsufsort  |   1    |   2   |   4   |   8   |  16   |  32  |  48  |
+|:---------------|----------:|-------------:|-------:|------:|------:|------:|------:|-----:|-----:|
+|  dblp.xml      |   295     |     65.1     |  214.9 | 137.7 |  90.4 |  49.5 |  26.9 | 15.6 | 12.2 |
+|  dna           |   385     |    145.0     |  315.7 | 197.5 | 124.6 |  62.4 |  36.1 | 23.3 | 19.3 |
+|  english       |  1024     |    417.5     | 1504.7 | 915.8 | 509.7 | 290.0 | 147.4 | 81.8 | 62.8 |
+|  pitches       |    53     |      9.1     |   24.2 |  15.1 |   9.4 |   5.0 |   2.9 |  2.0 |  1.7 |
+|  proteins      |  1129     |    457.6     | 1524.1 | 970.3 | 562.4 | 286.5 | 146.8 | 78.2 | 57.8 |
+|  sources       |   201     |     40.4     |  135.0 |  86.0 |  54.3 |  28.9 |  15.8 |  9.4 |  7.5 |
 
 Running times here stated in seconds.
 
