@@ -59,7 +59,7 @@ note:
 
 template<class saidx_t>
 void initBStarBuckets(const sauchar_t *T, saidx_t *SA, saidx_t* bucket_B, saidx_t n, saidx_t m, saidx_t* PAb) {
-    saidx_t num_blocks = getWorkers();
+    saidx_t num_blocks = std::min(m, (saidx_t)getWorkers());
     saidx_t block_size = (m-1) / num_blocks + 1;    
     saidx_t* block_bucket_cnt = newA(saidx_t, num_blocks*BUCKET_B_SIZE);
     memset(block_bucket_cnt, 0, sizeof(saidx_t)*num_blocks*BUCKET_B_SIZE); // TODO is this faster than parallel memset?
@@ -215,7 +215,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
   /* Count the number of occurrences of the first one or two characters of each
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
-  saidx_t num_blocks = getWorkers();
+  saidx_t num_blocks = std::min(n, (saidx_t)getWorkers());
   saidx_t block_size = n / num_blocks + 1;    
   saidx_t* bstar_count = newA(saidx_t, num_blocks);
   memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
@@ -245,6 +245,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       }
     }
     /* Compute ranks of type B* substrings. */
+    num_blocks = std::min(m, (saidx_t)getWorkers());
     saidx_t block_size = m / num_blocks + 1;
     saidx_t* block_start_rank = newA(saidx_t,num_blocks);
     block_start_rank[0] = 0;
@@ -297,6 +298,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     	parallelrangelite((uint64_t*)ISAb, (uint64_t*)SA, (uint64_t)m);
     //trsort(ISAb, SA, m, 1); // TODO reset.
     // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
+    num_blocks = std::min(n, (saidx_t)getWorkers());
     block_size = n / num_blocks + 1; // Use same blocks as when initializing bstar_count !
     /* Set the sorted order of type B* suffixes. */
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
@@ -331,7 +333,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
       for(c1 = ALPHABET_SIZE - 1; c0 < c1; --c1) {
         t = i - BUCKET_B(c0, c1);
         BUCKET_B(c0, c1) = i; /* end point */
-	// TODO make this in parallel, does SA[i] overwrite others SA[k] ?
+	    // TODO make this in parallel, does SA[i] overwrite others SA[k] ?
         for(i = t, j = BUCKET_BSTAR(c0, c1); j <= k; --i, --k) 
   		SA[i] = SA[k]; 
       }
