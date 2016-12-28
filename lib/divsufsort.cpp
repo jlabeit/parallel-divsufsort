@@ -216,7 +216,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
      type A, B and B* suffix. Moreover, store the beginning position of all
      type B* suffixes into the array SA. */
   saidx_t num_blocks = std::min(n, (saidx_t)getWorkers());
-  saidx_t block_size = n / num_blocks + 1;    
+  saidx_t block_size = (n-1) / num_blocks + 1;    
   saidx_t* bstar_count = newA(saidx_t, num_blocks);
   memset(bstar_count, 0, sizeof(saidx_t)*num_blocks);
   initBuckets(T, SA, bucket_A, bucket_B, n, m, num_blocks, block_size, bstar_count);
@@ -246,7 +246,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     }
     /* Compute ranks of type B* substrings. */
     num_blocks = std::min(m, (saidx_t)getWorkers());
-    saidx_t block_size = m / num_blocks + 1;
+    saidx_t block_size = (m-1) / num_blocks + 1;
     saidx_t* block_start_rank = newA(saidx_t,num_blocks);
     block_start_rank[0] = 0;
     // First pass calculate block start rank
@@ -299,7 +299,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
     //trsort(ISAb, SA, m, 1); // TODO reset.
     // TODO is the next step neccessary if SA is already sorted by paralleltrsort?
     num_blocks = std::min(n, (saidx_t)getWorkers());
-    block_size = n / num_blocks + 1; // Use same blocks as when initializing bstar_count !
+    block_size = (n-1) / num_blocks + 1; // Use same blocks as when initializing bstar_count !
     /* Set the sorted order of type B* suffixes. */
     parallel_for (saidx_t b = 0; b < num_blocks; b++) {
 		saidx_t s = std::min(n, block_size * (b+1)) - 1;
@@ -334,8 +334,9 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
         t = i - BUCKET_B(c0, c1);
         BUCKET_B(c0, c1) = i; /* end point */
 	    // TODO make this in parallel, does SA[i] overwrite others SA[k] ?
-        for(i = t, j = BUCKET_BSTAR(c0, c1); j <= k; --i, --k) 
-  		SA[i] = SA[k]; 
+        for(i = t, j = BUCKET_BSTAR(c0, c1); j <= k; --i, --k)  {
+  		    SA[i] = SA[k]; 
+        }
       }
       BUCKET_BSTAR(c0, c0 + 1) = i - BUCKET_B(c0, c0) + 1; /* start point */
       BUCKET_B(c0, c0) = i; /* end point */
